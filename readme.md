@@ -1,6 +1,6 @@
 # ZSet - node queue with a weight in the memory
 
-[![Build Status](https://travis-ci.org/s00d/zset-node.svg?branch=master)](https://travis-ci.org/s00d/zset-node)
+[![Build Status](https://travis-ci.org/s00d/zset.svg?branch=master)](https://travis-ci.org/s00d/zset)
 [![npm version](https://badge.fury.io/js/zset-node.svg)](https://badge.fury.io/js/zset-node)
 
 ## methods
