@@ -1,0 +1,21 @@
+{
+  "name": "zset",
+  "version": "1.0.0",
+  "description": "queue with a weight in the memory",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava ./test.js",
+    "bench": "matcha ./bench.js"
+  },
+  "keywords": [
+    "queue",
+    "weight",
+    "memory",
+    "zset"
+  ],
+  "author": "s00d <Virus191288@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "ava": "^0.25.0"
+  }
+}
