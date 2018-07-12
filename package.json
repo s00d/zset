@@ -1,6 +1,6 @@
 {
   "name": "zset-node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "queue with a weight in the memory",
   "main": "index.js",
   "scripts": {
