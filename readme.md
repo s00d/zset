@@ -40,11 +40,11 @@ clear zset
 ``` zset.clear() ```
 
 Install: 
-``` npm i ZSet --save ```
+``` npm i zset-node --save ```
 
 Example use: 
 ```
-let ZSet = require('ZSet');
+let ZSet = require('zset-node');
 let zset = new ZSet({t1: {val: {val: 1}}});
 zset.set('t2', {val: {val: 10}})
 zset.incr('t2')
