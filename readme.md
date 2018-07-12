@@ -36,8 +36,8 @@ del item:
 get by key item: 
 ``` zset.byKey('t1') ```
 
-reset weight
-``` zset.reset(default = 1) ```
+restart weight
+``` zset.restart(default = 1) ```
 
 clear zset
 ``` zset.clear() ```
@@ -56,7 +56,7 @@ console.log(zset.search('val.val', (count) => count > 5));
 zset.incr('t1', 5)
 zset.incr('t2', -1)
 console.log(zset.first());
-zset.reset()
+zset.restart()
 zset.byKey('t1')
 zset.clear()
 ```
