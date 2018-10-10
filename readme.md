@@ -45,14 +45,14 @@ clear zset
 ### Links
 only object values
 
-set_link
-``` zset.set_link('t10.val', 10) ```
+setLink
+``` zset.setLink('t10.val', 10) ```
 
-get_link
-``` zset.set_link(10) ```
+getLink
+``` zset.setLink(10) ```
 
-del_link
-``` zset.del_link(10) ```
+delLink
+``` zset.delLink(10) ```
 
 Install: 
 ``` npm i zset-node --save ```
