@@ -42,6 +42,18 @@ restart weight
 clear zset
 ``` zset.clear() ```
 
+### Links
+only object values
+
+set_link
+``` zset.set_link('t10.val', 10) ```
+
+get_link
+``` zset.set_link(10) ```
+
+del_link
+``` zset.del_link(10) ```
+
 Install: 
 ``` npm i zset-node --save ```
 
@@ -63,12 +75,18 @@ zset.clear()
 
 benchmark:
 ```
-       1,759,072 op/s » full
-      10,804,463 op/s » set
-     203,319,032 op/s » incr
-      16,473,545 op/s » set2
-      16,407,555 op/s » get
-       1,506,850 op/s » search
+       1,777,719 op/s » full
+      10,857,283 op/s » set
+     184,439,075 op/s » incr
+      16,156,104 op/s » set2
+      15,822,752 op/s » get
+       1,351,739 op/s » search
+      14,427,746 op/s » first
+      13,898,607 op/s » last
+     217,104,550 op/s » byKey
+       5,367,071 op/s » first and pop
+         592,784 op/s » set_link
+
 
   Suites:  1
   Benches: 6

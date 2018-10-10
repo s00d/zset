@@ -33,4 +33,23 @@ suite('ZSet_big', function () {
     bench('search', function () {
         test.search('ru.s1', (count) => count > 0);
     });
+    bench('first', function () {
+        test.first();
+    });
+    bench('last', function () {
+        test.first(true);
+    });
+    bench('byKey', function () {
+        test.byKey('t');
+    });
+    bench('first and pop', function () {
+        test.firstPop();
+    });
+
+    bench('set_link', function () {
+        let key = 't'+getRandomInt(0, 100);
+        test.set(key, {val: {val: 10}});
+        test.set_link(key+'.val', 10);
+        test.get_link(10);
+    });
 });

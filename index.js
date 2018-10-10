@@ -1,7 +1,38 @@
 class ZSet {
     constructor(init = {}) {
         this.data = {};
+        this.links = {};
         this.add(init)
+    }
+
+    set_link(path, key) {
+        path = path.split('.');
+
+        if (!this.data.hasOwnProperty(path[0])) {
+            return false
+        }
+        let select = this.data[path[0]].data;
+        path.splice(0, 1);
+        for (let key of path) {
+            if (!select.hasOwnProperty(key)) {
+                return false
+            }
+
+            if(typeof select[key] !== 'object') {
+                return false
+            }
+            select = select[key]
+        }
+        this.links[key] = select;
+        return select
+    }
+
+    get_link(key) {
+        return this.links.hasOwnProperty(key) ? this.links[key] : false;
+    }
+
+    del_link(key) {
+        delete this.links[key]
     }
 
     add(data = {}, score = 1) {
@@ -42,14 +73,14 @@ class ZSet {
         return sortable
     }
 
-    search(path, check = false) {
+    search(path, check = false, sort = true) {
         path = path.split('.');
-        let sort = this.get();
-        for (let item of sort) {
+        let vals = sort ? this.get() : this.data;
+        for (let item of vals) {
             let select = item.data;
             let end = false;
             for (let key of path) {
-                if(key === '_') {
+                if(key === '_' || key === '*') {
                     for(let country in select) {
                         if (select[country].hasOwnProperty(key)) return item
                     }
@@ -87,9 +118,9 @@ class ZSet {
 
     exec(func) {
         let sort = this.get();
-        for (let item of sort) {
+        for (let select of sort) {
             if (!func(select)) continue;
-            return item
+            return select
         }
         return false
     }
@@ -122,13 +153,15 @@ class ZSet {
 
     firstPop(inv = false) {
         let select = JSON.parse(JSON.stringify(this.cond(inv)));
+        if (!select) return false;
         this.del(select.key);
+
         return select;
     }
 
     byKey(key) {
         return this.data[key];
     }
-};
+}
 
 module.exports = ZSet;
