@@ -1,3 +1,8 @@
+/* eslint no-prototype-builtins: "error" */
+function checkKey (entries, key) {
+  return Object.prototype.hasOwnProperty.call(entries, key)
+}
+
 class ZSet {
   constructor (init = {}) {
     this.data = {}
@@ -8,13 +13,13 @@ class ZSet {
   setLink (path, key) {
     path = path.split('.')
 
-    if (!this.data.hasOwnProperty(path[0])) {
+    if (!checkKey(this.data, path[0])) {
       return null
     }
     let select = this.data[path[0]].data
     path.splice(0, 1)
-    for (let key of path) {
-      if (!select.hasOwnProperty(key)) {
+    for (const key of path) {
+      if (!checkKey(select, key)) {
         return null
       }
 
@@ -28,7 +33,7 @@ class ZSet {
   }
 
   getLink (key) {
-    return this.links.hasOwnProperty(key) ? this.links[key] : null
+    return checkKey(this.links, key) ? this.links[key] : null
   }
 
   delLink (key) {
@@ -36,13 +41,13 @@ class ZSet {
   }
 
   add (data = {}, score = 1) {
-    for (let key in data) {
+    for (const key in data) {
       this.data[key] = { score: score, key: key, data: data[key] }
     }
   }
 
   set (key, data, score = 1) {
-    let obj = {}
+    const obj = {}
     obj[key] = data
     this.add(obj, score)
   }
@@ -56,8 +61,8 @@ class ZSet {
   }
 
   get (min = null, max = null, filter = null) {
-    let sortable = []
-    for (let i in this.data) {
+    const sortable = []
+    for (const i in this.data) {
       if (min !== null && this.data[i].score < min) continue
       if (max !== null && this.data[i].score > max) continue
       if (filter !== null) {
@@ -75,18 +80,18 @@ class ZSet {
 
   search (path, check = null, sort = true) {
     path = path.split('.')
-    let vals = sort ? this.get() : this.data
-    for (let item of vals) {
+    const vals = sort ? this.get() : this.data
+    for (const item of vals) {
       let select = item.data
       let end = false
-      for (let key of path) {
+      for (const key of path) {
         if (key === '_' || key === '*') {
-          for (let country in select) {
-            if (select[country].hasOwnProperty(key)) return item
+          for (const country in select) {
+            if (checkKey(select[country], key)) return item
           }
           break
         }
-        if (!select.hasOwnProperty(key)) {
+        if (!checkKey(select, key)) {
           end = false
           break
         }
@@ -103,10 +108,10 @@ class ZSet {
   }
 
   searchService (service, check = null) {
-    let sort = this.get()
-    for (let item of sort) {
-      for (let country in item.data) {
-        if (item.data[country].hasOwnProperty(service)) {
+    const sort = this.get()
+    for (const item of sort) {
+      for (const country in item.data) {
+        if (checkKey(item.data[country], service)) {
           if (typeof check !== 'function' || !check(item.data[country])) {
             return { country: country, item: item }
           }
@@ -117,8 +122,8 @@ class ZSet {
   }
 
   exec (func) {
-    let sort = this.get()
-    for (let select of sort) {
+    const sort = this.get()
+    for (const select of sort) {
       if (!func(select)) continue
       return select
     }
@@ -139,7 +144,7 @@ class ZSet {
 
   cond (inv = false) {
     let result = null
-    for (let i in this.data) {
+    for (const i in this.data) {
       if (result === null) result = this.data[i]
       if (!inv && this.data[i].score < result.score) result = this.data[i]
       if (inv && this.data[i].score > result.score) result = this.data[i]
@@ -152,7 +157,7 @@ class ZSet {
   }
 
   firstPop (inv = false) {
-    let select = JSON.parse(JSON.stringify(this.cond(inv)))
+    const select = JSON.parse(JSON.stringify(this.cond(inv)))
     if (!select) return null
     this.del(select.key)
 

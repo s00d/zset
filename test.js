@@ -1,7 +1,7 @@
 import test from 'ava'
 import ZSet from './index'
 
-test(t => {
+test('check', t => {
   let data = { t1: { val: { val: 1 } }, t2: { val: 2 }, t3: { val: { val: 3 } } }
   let zset = new ZSet(data)
   let getData = zset.get()
